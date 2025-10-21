@@ -68,7 +68,7 @@
 								<!-- <img th:if="${p.imagen != null and p.imagen != ''}"
                                          th:src="@{/MostrarImagen(id=${p.idusuario})}"
                                          alt="Imagen Usuario" width="120" height="120" /> -->
-									<img th:src="@{/Imagenes/Productos/no-imagen.png}"
+									<img th:src="@{/usuarios/imagenUsuario(idusuario=${u.idusuario})}"
 										alt="Imagen Usuario" width="120" height="120" />
 								</td>
 								<td th:text="${u.email}">Email</td>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Configurar Usuario CUBOX</title>
+
+	<!-- Bootstrap 5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Iconos FontAwesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	<!-- librería Sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<!-- Estilos personalizados -->
+	<style>
+		body {
+			background: #f8f9fa;
+		}
+
+		.card {
+			border-radius: 15px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+			border: none;
+		}
+
+		h1 {
+			font-weight: bold;
+			color: #0d6efd;
+		}
+
+		label {
+			font-weight: 500;
+		}
+
+		.btn-primary {
+			padding: 10px;
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		@media (max-width: 576px) {
+			h1 {
+				font-size: 1.5rem;
+				text-align: center;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container py-5">
+		<div class="card p-4">
+			<h1 class="mb-4"><i class="fa-solid fa-user-plus"></i> Registrar/Actualizar Usuario</h1>
+
+			<!-- En Spring, th:action apunta al mapping que procese la subida (controller). -->
+			<form th:action="@{/usuarios/grabar}" method="post" th:object="${user}" enctype="multipart/form-data">
+				<!-- Si usas CSRF token con Spring Security, Thymeleaf coloca el campo automáticamente:
+                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+                 (si corresponde) -->
+				 
+				 <!-- Hidden para el id -->
+ 				<input type="hidden" th:field="*{idusuario}" />
+
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{nombre}" class="form-control" type="text" name="nombre" placeholder="Nombre" required />
+							<label>Nombre</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input th:field="*{apellidos}" class="form-control" type="text" name="apellidos" placeholder="Apellidos" required />
+							<label>Apellidos</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="inputImagen" class="mb-1">Fotografía (jpg, jpeg, png)</label>
+						<input class="form-control" type="file" name="imagenFile" id="inputImagen" accept=".jpg,.jpeg,.png"/>
+						
+<!--					<input class="form-control" type="file" name="imagenFile" id="inputImagen" accept=".jpg,.jpeg,.png"
+						required />-->
+<!-- Si el formulario se usa tanto para crear como para editar, no pongas required en el <input type="file">.
+Razonamiento: al editar normalmente no quieres obligar a volver a subir la foto (tu controlador ya conserva la 
+imagen existente si no se sube archivo). -->
+				</div>
+
+				<div class="form-floating mb-3">
+					<input th:field="*{email}" class="form-control" id="inputEmail" type="email" name="email"
+						placeholder="Correo Electrónico" required />
+					<label for="inputEmail">Correo Electrónico</label>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{celular}" class="form-control" type="text" name="celular" placeholder="Celular" required />
+							<label>Celular</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<!-- La entidad usa String para dni; usamos text y límite 8 -->
+							<input th:field="*{dni}" class="form-control" type="text" name="dni" placeholder="DNI" maxlength="8"
+								pattern="\d{8}" required />
+							<label>DNI</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<!-- en la entidad el campo de contraseña se llama 'clave' -->
+							<input th:field="*{clave}" class="form-control" type="password" name="clave" placeholder="Contraseña"
+								required />
+							<label>Contraseña</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mb-3 mb-md-0">
+							<select th:field="*{rol}" class="form-select p-3" name="rol" id="rol" required>
+								<option value="admin">Rol Administrador</option>
+								<option value="web">Rol Usuario Web</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-4 mb-0">
+					<div class="d-grid">
+						<button class="btn btn-primary" type="submit"><i class="fa-solid fa-save"></i> Guardar</button>
+					</div>
+				</div>
+
+				<div style="margin:15px 0px">
+					<a th:href="@{/usuarios/admin}" class="btn btn-info">Ir Usuario Admin</a>
+					<a th:href="@{/usuarios/web}" class="btn btn-success">Ir Usuario Web</a>
+				</div>
+
+				<!-- Mensaje proveniente del model (por ejemplo model.addAttribute("mensaje", "...")) -->
+				<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
+				
+			</form>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

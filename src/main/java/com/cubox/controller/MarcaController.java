@@ -216,6 +216,7 @@ public class MarcaController {
                 if (!extension.equals(".png") && !extension.equals(".jpg") && !extension.equals(".jpeg")) {
                     model.addAttribute("mensaje", "Tipo de archivo no permitido. Use jpg/jpeg/png.");
                     model.addAttribute("cssmensaje", "alert alert-danger");
+                    //model.addAttribute("marca", marca);
                     return "registrarMarca";
                 }
                 
