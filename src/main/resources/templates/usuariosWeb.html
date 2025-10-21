@@ -76,20 +76,34 @@
 									F. Registro
 								</td>
 								<td class="text-center">
-									<a th:href="@{/editarUsu(id=${u.idusuario})}"
-										class="btn btn-sm btn-outline-primary me-1" title="Editar">
-										<i class="fas fa-pencil-alt"></i>
-									</a>
+								  <form style="display:inline;" th:object="${u}">
+								    <!-- Botón EDITAR -> hace GET a /usuarios/editar/{idusuario} -->
+								    <button type="submit"
+								            th:formaction="@{/usuarios/editar/} + ${u.idusuario}"
+								            formmethod="get"
+								            class="btn btn-sm btn-outline-primary me-1"
+								            title="Editar">
+								      <i class="fas fa-pencil-alt"></i>
+								    </button>
 
-									<a th:href="@{/UsuarioCrud(accion='eli',id=${u.idusuario})}"
-										class="btn btn-sm btn-outline-danger" title="Eliminar"
-										onclick="return confirm('¿Confirmas eliminar este usuario?');">
-										<i class="fas fa-trash-alt"></i>
-									</a>
+								    <!-- Botón ELIMINAR -> hace POST a /usuarios/editar/{idusuario} -->
+								    <button type="submit"
+								            th:formaction="@{/usuarios/eliminar/{id}(id=${u.idusuario})}"
+								            formmethod="post"
+								            class="btn btn-sm btn-outline-danger"
+								            title="Eliminar">
+								      <i class="fas fa-trash-alt"></i>
+								    </button>
+								  </form>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					
+					<br><br>
+					<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
+					<div role="alert" th:class="${cssmensaje2}" th:text="${mensaje2}"></div>
+					
 				</div>
 			</div>
 		</main>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -152,6 +153,7 @@ public class UsuarioController {
 	
 //------------------------------------------------------------------------------------------------------------------------------
 
+	
 	
 	@PostMapping("/grabar")
 	private String grabarUsuario(@ModelAttribute Usuario user, @RequestParam(value = "imagenFile", required = false) 
@@ -292,6 +294,195 @@ public class UsuarioController {
 		
 	}
 	
+	
+	
+	@GetMapping("/editar/{idusuario}")
+    private String editarMarca(@PathVariable("idusuario") int idusuario, Model model, HttpSession session) {
+    	
+    	// "Log de session id" también al cargar principal...
+	    System.out.println("Accediendo a registrarActualizarUsuario.html para editar - ID de sesión: " + session.getId());
+	    
+	    Usuario usuarioObtenido = repoUsu.findById(idusuario).get();
+	    
+	    model.addAttribute("user", usuarioObtenido);
+    	
+    	return "registrarActualizarUsuario";
+    }
+	
+	
+	
+	@PostMapping("/eliminar/{idusuario}")
+	private String eliminarUsuario(@PathVariable("idusuario") int idusuario, Model model, HttpSession session) {
+
+	    // Log de session id
+	    System.out.println("Accediendo a /usuarios/eliminar - ID de sesión: " + session.getId());
+
+	    // Ruta fija (ajusta según tu entorno o mejor: poner en application.properties y leer con @Value)
+	    String rutaCarpeta = "C:" + File.separator + "ProyectoImagenesLPI" + File.separator + "imagenesUsuario";
+
+	    try {
+	    	
+	        // 1) Obtener usuario por el ID recibido desde el form
+	    	
+	        System.out.println("idusuario: " + idusuario);
+	        
+	        Usuario u = repoUsu.findById(idusuario).orElse(null);
+
+	        String rol = u.getRol(); // guardamos rol antes de borrar
+
+	        
+	        // 2) Intentar eliminar el archivo asociado (si existe y no es default)
+	        
+	        String nombreArchivo = u.getImagen();
+
+	        if (nombreArchivo != null && !nombreArchivo.isBlank()
+	                && !nombreArchivo.equalsIgnoreCase("defaultUsuario.png")) {
+
+	            Path ruta = Paths.get(rutaCarpeta);
+
+	            if (Files.exists(ruta)) {
+	            	
+	                Path archivo = ruta.resolve(nombreArchivo);
+	                
+	                try {
+	                	
+	                    if (Files.exists(archivo)) {
+	                    	
+	                        boolean borrado = Files.deleteIfExists(archivo);
+	                        
+	                        if (borrado) {
+	                        	
+	                            System.out.println("Archivo eliminado: " + archivo.toString());
+	                            
+	                        } else {
+	                        	
+	                            System.err.println("No se pudo eliminar (deleteIfExists devolvió false): " + archivo.toString());
+	                            
+	                        }
+	                        
+	                    } else {
+	                    	
+	                        System.out.println("Archivo no existe en disco: " + archivo.toString());
+	                        
+	                    }
+	                    
+	                } catch (Exception ioe) {
+	                	
+	                    // Registramos el error y continuamos (no abortamos la eliminación en BD)
+	                	
+	                    ioe.printStackTrace();
+	                    model.addAttribute("mensaje2", "Error al eliminar archivo en disco (se intentó continuar con la BD).");
+	                    model.addAttribute("cssmensaje2", "alert alert-warning");
+	                    
+	                }
+	                
+	            } else {
+	            	
+	                System.out.println("Carpeta de imágenes no existe: " + ruta.toString());
+	                
+	            }
+
+	        } else {
+	        	
+	            System.out.println("No hay imagen a eliminar o es imagen por defecto.");
+	            
+	        }
+
+	        
+	        
+	        // 3) Eliminar usuario en BD
+	        
+	        try {
+	        	
+	            repoUsu.delete(u);
+	            
+	            model.addAttribute("mensaje", "Usuario eliminado exitosamente.");
+	            model.addAttribute("cssmensaje", "alert alert-success");
+	            
+	        } catch (Exception e) {
+	        	
+	            e.printStackTrace();
+	            model.addAttribute("mensaje", "Error al eliminar usuario.");
+	            model.addAttribute("cssmensaje", "alert alert-danger");
+	            
+	            // recargar listas y devolver vista
+	            
+	            model.addAttribute("lstUsuariosAdmin", repoUsu.findAllByRol("admin"));
+	            model.addAttribute("lstUsuarioWeb", repoUsu.findAllByRol("web"));
+	            
+	            return "usuariosAdmin";
+	            
+	        }
+
+	        // 4) Devolver la vista con la lista actualizada según rol
+	        
+	        if ("admin".equalsIgnoreCase(rol)) {
+	        	
+	            model.addAttribute("lstUsuariosAdmin", repoUsu.findAllByRol("admin"));
+	            return "usuariosAdmin";
+	            
+	        } else {
+	        	
+	            model.addAttribute("lstUsuarioWeb", repoUsu.findAllByRol("web"));
+	            return "usuariosWeb";
+	            
+	        }
+
+	    } catch (Exception ex) {
+	    	
+	        ex.printStackTrace();
+	        model.addAttribute("mensaje", "Error inesperado al eliminar el usuario");
+	        model.addAttribute("cssmensaje", "alert alert-danger");
+	        
+	        // recargar listas por seguridad
+	        
+	        model.addAttribute("lstUsuariosAdmin", repoUsu.findAllByRol("admin"));
+	        model.addAttribute("lstUsuarioWeb", repoUsu.findAllByRol("web"));
+	        
+	        return "usuariosAdmin";
+	        
+	    }
+	}
+
+	
+	
+	
+//	@PostMapping("/eliminar/{idusuario}")
+//	private String eliminarMarca(@PathVariable("idusuario") int idusuario, Model model, HttpSession session) {
+//
+//		// "Log de session id" también al eliminar una nueva marca...
+//		System.out.println("Accediendo a /usuarios/eliminar - ID de sesión: " + session.getId());
+//
+//		// 1) Obtener marca por el ID recibido desde el form
+//		System.out.println("idusuario: " + idusuario);
+//		Usuario u = repoUsu.findById(idusuario).get();
+//
+//		String rol = u.getRol();
+//
+//		// 2) Eliminar marca
+//
+//		try {
+//
+//			repoUsu.delete(u);
+//
+//			model.addAttribute("mensaje", "Usuario eliminado exitosamente.");
+//			model.addAttribute("cssmensaje", "alert alert-success");
+//
+//		} catch (Exception e) {
+//
+//			model.addAttribute("mensaje", "Error al eliminar marca.");
+//			model.addAttribute("cssmensaje", "alert alert-danger");
+//
+//		}
+//
+//		if (rol == "admin") {
+//			model.addAttribute("lstUsuariosAdmin", repoUsu.findAll());
+//		} else {
+//			model.addAttribute("lstUsuariosWeb", repoUsu.findAll());
+//		}
+//
+//		return "";
+//	}
 	
 	
 
