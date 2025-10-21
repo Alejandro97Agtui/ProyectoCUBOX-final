@@ -1,0 +1,96 @@
+.bg-categorias{
+    background-color: #f5f5f5;
+    padding-bottom: 40px;
+    
+}
+
+.categoriaTitle{
+    text-align: center;
+    font-size: 40px;
+    padding: 20px 0px;
+    font-weight: 700;
+    
+}
+.contenedorCategorias{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 0px;
+    
+    
+}
+.categorias{
+    width: 380px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.flexTituloCat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.flexTituloCat .titulocel {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.flexTituloCat a{
+    color: blue;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.contenedorImgCategoria{
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.contenedorImgCategoria:hover img {
+    transform: scale(1.05); /* Aumenta un 5% el tamaño */
+    transition: transform 0.3s ease; /* Solo anima la propiedad transform */
+}
+
+.contenedorImgCategoria img{
+    width: 100%;
+}
+
+.contenedorImgCatpequenos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.contenedorImgcel{
+    width: 90px;
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 10px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin:10px 0px;
+}
+
+.contenedorImgcel:hover img{
+    transform : scale(1.1);
+    transition: all ease .3s;
+}
+
+.contenedorImgcel img{
+    width: 100%;
+    mix-blend-mode: multiply; /*Elimina el color de fonto blanco*/
+}
+
+@media (max-width:600px ) {
+ .categoriaTitle{
+    font-size: 30px;
+    line-height: 1.2;
+ }
+}

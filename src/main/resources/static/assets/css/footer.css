@@ -1,0 +1,114 @@
+footer{
+    background-color: #363636;
+    padding: 40px 0px;
+}
+
+.containerFooter{
+    display: flex;
+    justify-content: space-between;
+
+    gap: 30px;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.titleContacto{
+    padding: 20px 0px;
+    font-size: 20px;
+}
+
+.flexContactos{
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    
+}
+.flexContactos a{
+    text-decoration: none;
+    color: white;
+}
+
+.flexContactos a i{
+    font-size: 25px;
+    font-weight: 300;
+}
+
+
+.contenedorFooter{
+    padding: 20px 0px;
+    line-height: 2;
+}
+
+
+/*REDES Y PAGOS*/
+
+.redesPgos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0px; 
+    flex-wrap: wrap;
+
+    gap: 40px;
+    padding: 0px 20px;
+}
+
+.FlexRedes{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.redes{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #99A1AF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.redes a{
+    font-size: 20px;
+    color: white;
+}
+
+.redes:hover {
+   background-color: red;
+    color: white;
+}
+
+.redes a{
+    transition: color 0.3s ease;
+}
+
+.redes a:hover {
+  
+    color: white;
+   
+}
+
+.metodoPagos img{
+    width: 100%;
+}
+
+@media (max-width:800px ) {
+ .containerFooter{
+    flex-direction: column;
+    gap: 50px;
+    padding: 0px 20px;
+
+ }
+ 
+ 
+}
+
+@media (max-width: 500px) {
+ .flextituloFlecha{
+    flex-direction: column;
+    gap: 20px;
+ }
+}

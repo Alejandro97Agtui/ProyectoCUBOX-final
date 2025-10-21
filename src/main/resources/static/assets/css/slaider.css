@@ -1,0 +1,96 @@
+
+
+  /* Contenedor del slider */
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 30px; /* escritorio */
+    margin: auto;
+    overflow: hidden;
+    margin-top: 60px;
+    
+  }
+
+  /* Imágenes */
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    /*object-fit: cover;*/
+  }
+
+  /* Imagen visible */
+  .slide.active {
+    opacity: 1;
+  }
+
+  /*SLAIDER IMAGENES GRANDES */
+  /**/
+
+ .wrap-carrusel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: aliceblue;
+}
+
+.contenedor-carrusel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.item-carrusel {
+  min-width: 100%;
+}
+
+.item-carrusel picture,
+.item-carrusel img {
+  width: 100%;
+/* height: 500px;*/
+  object-fit: cover;
+}
+
+.puntos-carrusel {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.punto {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.punto.activo {
+  background-color: red;
+}
+/*FIN SLAIDER IMAGENES GRANDES*/
+
+
+  /* En pantallas <= 768px aumenta la altura */
+  @media (max-width: 768px) {
+    .slider {
+      height: 50px; /* altura mayor en móvil */
+    }
+  }
+
+
+
+
+
+
+  

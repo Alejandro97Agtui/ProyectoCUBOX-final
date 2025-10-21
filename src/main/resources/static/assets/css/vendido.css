@@ -1,0 +1,100 @@
+.bg-vendido{
+    background-color: #f5f5f5;
+}
+.separacion-vendido{
+    padding: 40px 0px;
+}
+.titulo-vendido{
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+    padding-bottom: 40px;
+    text-transform: uppercase;   
+
+}
+
+.contenedorVendido{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+
+   
+}
+
+.vendido{
+    width: 260px;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+	display: flex;
+	flex-direction: column;
+    overflow: hidden;
+    height: 420px;
+}
+
+.vendido:hover img{
+     transform: scale(1.05); /* Aumenta un 5% el tamaño */
+    transition: transform 0.3s ease; 
+}
+
+.contenedorImgVendido{
+    width: 100%;
+	height: 267px;
+    overflow: hidden;
+    
+}
+.contenedorImgVendido img{
+    width: 100%;
+    height: 100%;
+	object-fit: cover;;
+}
+
+
+.contenedorInfoVendido{
+    padding: 10px 15px;
+    text-align: center;
+}
+
+
+.flexPrecios{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0px;
+}
+.contenedorInfoVendido .parrafo{
+   display: -webkit-box;
+    -webkit-line-clamp: 2;       /* Número de líneas visibles */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    line-height: 1.4;            /* Espaciado entre líneas */
+    max-height: calc(1.4em * 2); /* 2 líneas exactas */
+    padding: 0;  
+}
+.flexPrecios .precioActual{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.flexPrecios .precioDescuento{
+    font-size: 18px;
+    font-weight: 600;
+    color: green;
+    text-decoration: line-through;
+}
+
+.contenedorImgCatpequeños{
+    padding: 15px 0px;
+}
+
+@media (max-width:600px ) {
+ .titulo-vendido{
+    font-size: 30px;
+ }
+}

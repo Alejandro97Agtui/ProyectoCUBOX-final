@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Marcas CUBOX</title>
+
+	<!-- librería Sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- FontAwesome para íconos -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+
+	<div id="layoutSidenav_content">
+		<main>
+			<div class="container-fluid px-4 mt-4">
+				<h2 class="my-4">Configurar Marca</h2>
+
+				<!-- Botón para registrar usuario -->
+				<a th:href="@{/marcas/registrar}" class="btn btn-success mb-4">
+					<i class="fas fa-user-plus"></i> Registrar Marca
+				</a>
+				<div style="display: inline;">
+					<!-- Botón para regresar a panel-->
+					<a th:href="@{/panel}" class="btn btn-secondary mb-4">
+						<i class="fa-solid fa-rotate-left"></i> Regresar
+					</a>
+				</div>
+
+				<!-- Tabla de usuarios -->
+				<div class="table-responsive">
+					<table id="datatablesSimple" class="table table-striped table-hover table-bordered align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Imagen</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="m : ${lstMarcas}">
+								<td th:text="${m.idmarca}">1</td>
+								<td th:text="${m.nombre}">Nombre Marca</td>
+								<td>
+<!--									<img th:src="@{/Imagenes/Productos/no-imagen.png}" alt="Imagen Marca" width="120"-->
+<!--										height="120" />
+										<img src="/marcas/ImagenMarca?idmarca=${m.idmarca}" alt="Imagen Marca" width="120" height="120" />   -->
+									<img th:src="@{/marcas/ImagenMarca(idmarca=${m.idmarca})}" alt="Imagen Marca" width="120"
+									 height="120" />
+								</td>
+								<td class="text-center">
+								  <form style="display:inline;" th:object="${m}">
+								    <!-- Botón EDITAR -> hace GET a /marcas/editar/{id} -->
+								    <button type="submit"
+								            th:formaction="@{/marcas/editar/} + ${m.idmarca}"
+								            formmethod="get"
+								            class="btn btn-sm btn-outline-primary me-1"
+								            title="Editar">
+								      <i class="fas fa-pencil-alt"></i>
+								    </button>
+
+								    <!-- Botón ELIMINAR -> hace POST a /marcas/eliminar/{id} -->
+								    <button type="submit"
+								            th:formaction="@{/marcas/eliminar/{id}(id=${m.idmarca})}"
+								            formmethod="post"
+								            class="btn btn-sm btn-outline-danger"
+								            title="Eliminar">
+								      <i class="fas fa-trash-alt"></i>
+								    </button>
+								  </form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
+					<br><br>
+					<div role="alert" th:class="${cssmensaje2}" th:text="${mensaje2}"></div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- DataTables JS -->
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+	<!-- Inicialización de DataTables -->
+	<script>
+		$(document).ready(function () {
+			$('#datatablesSimple').DataTable({
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+				}
+			});
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Dashboard CUBOX</title>
+
+	<!-- CDNs -->
+	<link th:href="@{https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css}" rel="stylesheet" />
+	<script th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}" crossorigin="anonymous"></script>
+
+	<!-- Local CSS (en static/dasboard/css/) -->
+	<link th:href="@{/dasboard/css/styles.css}" rel="stylesheet" />
+</head>
+
+<body class="sb-nav-fixed">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		<!-- Navbar Brand-->
+		<a class="navbar-brand ps-3" href="#">CUBOX</a>
+		<!-- Sidebar Toggle-->
+		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+			<i class="fas fa-bars"></i>
+		</button>
+
+		<!-- Navbar Search-->
+		<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+			<div class="input-group">
+				<input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+					aria-describedby="btnNavbarSearch" />
+				<button class="btn btn-primary" id="btnNavbarSearch" type="button">
+					<i class="fas fa-search"></i>
+				</button>
+			</div>
+		</form>
+
+		<!-- Icons -->
+		<div class="d-flex align-items-center" style="padding-right: 10px;">
+
+			<a href="#" class="btn btn-link text-secondary me-3 position-relative">
+				<i class="fa-solid fa-cart-shopping fs-5"></i>
+				<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">0</span>
+			</a>
+
+			<!-- Menú usuario -->
+			<div class="dropdown" style="background-color: grey; border-radius: 25px;">
+				<a href="#" class="d-flex align-items-center" id="dropdownUser" data-bs-toggle="dropdown"
+					aria-expanded="false">
+					<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="Usuario" class="rounded-circle"
+						width="36" height="36" style="object-fit: cover;"
+						onerror="this.src='/Imagenes/Perfil/default-user.png'">
+				</a>
+				<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser" style="width: 250px;">
+					<li class="text-center p-3">
+						<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="foto" class="rounded-circle mb-2"
+							width="60" height="60" style="object-fit: cover; width: 75px;"
+							onerror="this.src='/Imagenes/Perfil/default-user.png'">
+						<div class="fw-semibold" th:text="${u.nombre}">Nombre</div>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li><a class="dropdown-item" href=""><i class="fa-regular fa-user me-2"></i> Actualizar datos</a>
+					</li>
+					<li><a class="dropdown-item" href=""><i class="fa-regular fa-circle-question me-2"></i> Ayuda</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li><a class="dropdown-item text-danger" th:href="@{logout}"><i
+								class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar sesión</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<div class="sb-sidenav-menu-heading">Index</div>
+						<a class="nav-link" th:href="@{/principal}">
+							<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> Inicio
+						</a>
+
+						<div th:if="${u.rol != 'web'}">
+							<div class="sb-sidenav-menu-heading">Interface</div>
+							<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+								data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+								<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div> Usuarios
+								<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+							</a>
+							<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+								data-bs-parent="#sidenavAccordion">
+								<nav class="sb-sidenav-menu-nested nav">
+									<a class="nav-link" href="#"
+										target="_blank">Admin</a>
+									<a class="nav-link" href="#"
+										target="_blank">Web</a>
+								</nav>
+							</div>
+						</div>
+
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+							aria-expanded="false" aria-controls="collapsePages">
+							<div class="sb-nav-link-icon"><i class="fas fa-shopping-basket"></i></div> Productos
+							<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+						</a>
+						<div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+							data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<div th:if="${u.rol != 'web'}">	
+									<a class="nav-link" href="#" target="_blank">Configurar Productos</a>
+								</div>
+								<a class="nav-link" href="#" target="_blank">Ver Catálogo</a>
+							</nav>
+						</div>
+
+						<div th:if="${u.rol != 'web'}">
+							<div class="sb-sidenav-menu-heading">OTROS</div>
+							<a class="nav-link" th:href="@{/marcas/consultar}" target="_blank">
+								<div class="sb-nav-link-icon"><i class="fa-solid fa-tag"></i></div> Configurar Marcas
+							</a>
+						</div>
+
+						<div class="sb-sidenav-menu-heading">Transacciones</div>
+						<a class="nav-link" href="#">
+							<div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div> Compra
+						</a>
+
+					</div>
+				</div>
+				<div class="sb-sidenav-footer">
+					<div class="small">Logged in as:</div>
+					<div th:text="${u.nombre} + ' ' + ${u.apellidos}">Usuario Apellidos</div>
+				</div>
+			</nav>
+		</div>
+
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">Dashboard</h1>
+					<ol class="breadcrumb mb-4">
+						<li class="breadcrumb-item active">Dashboard</li>
+					</ol>
+
+					<!-- Cards -->
+					<div class="row">
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-primary text-white mb-4">
+								<div class="card-body">Primary Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-warning text-white mb-4">
+								<div class="card-body">Warning Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-success text-white mb-4">
+								<div class="card-body">Success Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-danger text-white mb-4">
+								<div class="card-body">Danger Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Charts -->
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="card mb-4">
+								<div class="card-header"><i class="fas fa-chart-area me-1"></i> Area Chart Example</div>
+								<div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<div class="card mb-4">
+								<div class="card-header"><i class="fas fa-chart-bar me-1"></i> Bar Chart Example</div>
+								<div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- DataTable -->
+					<div class="card mb-4">
+						<div class="card-header"><i class="fas fa-table me-1"></i> DataTable Example</div>
+						<div class="card-body">
+							<table id="datatablesSimple">
+								<thead> ... mismo contenido del tbody que tenías ... </thead>
+								<tfoot> ... </tfoot>
+								<tbody>
+									<!-- Puedes mantener el mismo <tbody> estático o generar filas con Thymeleaf -->
+									<tr>
+										<td>Tiger Nixon</td>
+										<td>System Architect</td>
+										<td>Edinburgh</td>
+										<td>61</td>
+										<td>2011/04/25</td>
+										<td>$320,800</td>
+									</tr>
+									<!-- Resto de filas... -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div class="d-flex align-items-center justify-content-between small">
+						<div class="text-muted">Copyright &copy; Your Website 2023</div>
+						<div><a href="#">Privacy Policy</a> &middot; <a href="#">Terms &amp; Conditions</a></div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<!-- Scripts: CDN + locales -->
+	<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/dasboard/js/scripts.js}"></script>
+	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js}"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/assets/demo/chart-area-demo.js}"></script>
+	<script th:src="@{/assets/demo/chart-bar-demo.js}"></script>
+	<script th:src="@{https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js}"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/dasboard/js/datatables-simple-demo.js}"></script>
+</body>
+
+</html>
