@@ -30,7 +30,7 @@
 </head>
 
 <!--  La variable de sesión "usuario" se asigna a u con th:with="u=${session.usuario}" para no romper el resto de referencias ${u.*}. -->
-<body th:with="u=${session.usuario}">
+<body th:with="u=${session.user}">
 
 	<!-- Nota: el locale se configura generalmente en Spring; si necesitas manejarlo en la vista, configúralo desde el controlador. -->
 
@@ -44,7 +44,7 @@
 
 			<!-- Botón Categorías -->
 			<button class="btn-categorias">
-				<a th:href="@{/panel}"><span class="menu-icon">&#9776;</span> Panel</a>
+				<a th:href="@{/panel}" style="text-decoration: none;"><span class="menu-icon">&#9776;</span> Panel</a>
 			</button>
 
 			<!-- Buscador -->
@@ -127,7 +127,9 @@
 					<div class="col" th:each="p : ${lstProductos}">
 						<div class="card h-100">
 							<img class="card-img-top" th:src="@{/Imagenes/Productos/{id}.jpg(id=${p.idproducto})}"
-								alt="imagen del producto" onerror="this.src='/Imagenes/Productos/no-imagen.png';">
+								alt="imagen del producto" style="height: 220px;"
+								onerror="this.src='/Imagenes/Productos/no-imagen.png';">
+								<!-- style="height: 200px;" para el img -->
 							<div class="card-body" style="background-color: lightblue;">
 								<h5 class="card-title" th:text="${p.nombre}">Nombre Producto</h5>
 								<p class="card-text">
@@ -154,6 +156,7 @@
 					</div> <!-- /producto -->
 				</div>
 			</div>
+			<br>
 		</div>
 	</main>
 

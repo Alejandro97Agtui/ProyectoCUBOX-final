@@ -122,6 +122,10 @@ public class LoginSignInController {
 			
 			// Guarda usuario en sesión (clave "u", igual que tu template)
 			session.setAttribute("user", usuarioObtenido);
+			
+			// opcional: cantidad de artículos en la canasta (0 por defecto)
+			session.setAttribute("cantArticulos", 0);
+			
 			System.out.println("Usuario grabado en sesión: " + usuarioObtenido.getIdusuario() + 
 					" - " + usuarioObtenido.getNombre() + " " + usuarioObtenido.getApellidos() + " - " + 
 					" - DNI: " + usuarioObtenido.getDni());  //sysout
@@ -170,12 +174,14 @@ public class LoginSignInController {
 		// Pasar usuario al modelo (thymeleaf puede usar ${u} desde el model o desde session)
 		model.addAttribute("u", u);
 		
-		// Cantidad de artículos en canasta
-	    //Integer cant = (Integer) session.getAttribute("cantArticulos");
-	    //model.addAttribute("cantArticulos", cant == null ? 0 : cant);
+		// Verificar Cantidad de artículos en canasta
+	    Integer cant = (Integer) session.getAttribute("cantArticulos");
+	    model.addAttribute("cantArticulos", cant == null ? 0 : cant);
 		
 		// "Log de session id" también al cargar panel...
 	    System.out.println("Accediendo a Panel - ID de sesión: " + session.getId());
+	    System.out.println("Usuario: " + session.getAttribute("user"));
+	    System.out.println("Cantidad artículos en canasta: " + session.getAttribute("cantArticulos"));
 		
 		return "panel"; // Thymeleaf buscará templates/panel.html
 		

@@ -116,7 +116,7 @@
 								<div th:if="${u.rol != 'web'}">	
 									<a class="nav-link" href="#" target="_blank">Configurar Productos</a>
 								</div>
-								<a class="nav-link" href="#" target="_blank">Ver Catálogo</a>
+								<a class="nav-link" th:href="@{/catalogo/abrir}" target="_blank">Ver Catálogo</a>
 							</nav>
 						</div>
 
