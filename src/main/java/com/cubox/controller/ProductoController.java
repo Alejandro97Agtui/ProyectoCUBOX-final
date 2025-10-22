@@ -15,7 +15,21 @@ import jakarta.servlet.http.HttpSession;
 
 public class ProductoController {
 	
+	@Autowired
+	private IProductoRepository repoProd;
 	
+	
+	@GetMapping("/CRUD")
+	private String abrirCrudProductos(Model model, HttpSession session) {
+		
+		// "Log de session id"
+	    System.out.println("Accediendo a manten_producto.html  - ID de sesión: " + session.getId());
+	    
+	    model.addAttribute("lstProductos", repoProd.findAll());
+		
+		return "manten_producto";
+		
+	}
 
 }
 

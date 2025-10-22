@@ -114,7 +114,7 @@
 							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<div th:if="${u.rol != 'web'}">	
-									<a class="nav-link" href="#" target="_blank">Configurar Productos</a>
+									<a class="nav-link" th:href="/productos/CRUD" target="_blank">Configurar Productos</a>
 								</div>
 								<a class="nav-link" th:href="@{/catalogo/abrir}" target="_blank">Ver Catálogo</a>
 							</nav>
