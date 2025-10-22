@@ -1,5 +1,6 @@
 package com.cubox.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.servlet.http.HttpSession; // Spring Boot 3 (Jakarta EE)
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cubox.model.DetallePedido;
 import com.cubox.model.Producto;
 import com.cubox.model.Usuario;
 import com.cubox.repository.IProductoRepository;
@@ -124,7 +126,13 @@ public class LoginSignInController {
 			session.setAttribute("user", usuarioObtenido);
 			
 			// opcional: cantidad de artículos en la canasta (0 por defecto)
+			// Inicializamos los parámetros del carro de la sesión
 			session.setAttribute("cantArticulos", 0);
+			session.setAttribute("subTotalVenta", 0.0);
+			
+			// Asumiendo que tienes la clase DetallePedido. Inicializas el carro vacío
+			List<DetallePedido> carro = new ArrayList<>();
+			session.setAttribute("carro", carro);
 			
 			System.out.println("Usuario grabado en sesión: " + usuarioObtenido.getIdusuario() + 
 					" - " + usuarioObtenido.getNombre() + " " + usuarioObtenido.getApellidos() + " - " + 

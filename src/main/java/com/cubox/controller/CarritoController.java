@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cubox.model.Producto;
 import com.cubox.repository.IProductoRepository;
@@ -66,6 +68,23 @@ public class CarritoController {
 		return "compraProducto";
 		
 	}
+	
+	
+	
+	@PostMapping("/agregar")
+	private String agregarProductoSeleccionadoACanaste(@RequestParam("cantidad") int cantidad, Model model, HttpSession session) {
+		
+		Producto productoSeleccionado = (Producto) session.getAttribute("productoSeleccionado");
+		
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println("Producto Seleccionado: " + productoSeleccionado);
+		System.out.println("Cantidad del producto Seleccionado a comprar: " + cantidad);
+		
+		
+		return "canasta";
+	}
+	
+	
 	
 }
 
