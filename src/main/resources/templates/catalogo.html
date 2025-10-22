@@ -126,10 +126,12 @@
 				<div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
 					<div class="col" th:each="p : ${lstProductos}">
 						<div class="card h-100">
-							<img class="card-img-top" th:src="@{/Imagenes/Productos/{id}.jpg(id=${p.idproducto})}"
+							<img class="card-img-top" th:src="@{/productos/ImagenProducto(idproducto=${p.idproducto},tipo='principal')}"
 								alt="imagen del producto" style="height: 220px;"
 								onerror="this.src='/Imagenes/Productos/no-imagen.png';">
-								<!-- style="height: 200px;" para el img -->
+                   <!-- 	<img class="card-img-top" th:src="@{/Imagenes/Productos/{id}.jpg(id=${p.idproducto})}"
+									alt="imagen del producto" style="height: 220px;"
+									onerror="this.src='/Imagenes/Productos/no-imagen.png';"> -->
 							<div class="card-body" style="background-color: lightblue;">
 								<h5 class="card-title" th:text="${p.nombre}">Nombre Producto</h5>
 								<p class="card-text">
@@ -146,7 +148,7 @@
 							</div>
 							<div class="card-footer text-end">
 								<a class="btn btn-outline-primary" th:if="${p.stock > 0}"
-									th:href="@{/seleccionar(id=${p.idproducto})}"
+									th:href="@{/carrito/seleccionar(id=${p.idproducto})}"
 									onclick="return confirm('¿Procesar?')">Añadir</a>
 
 								<button type="button" class="btn btn-primary" disabled
