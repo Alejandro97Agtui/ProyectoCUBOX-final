@@ -71,19 +71,19 @@
 								<td th:text="${p.stock}">Stock</td>
 
 								<td>
-									<img th:src="@{/ImagenProducto(idproducto=${p.idproducto},tipo='principal')}"
+									<img th:src="@{/productos/ImagenProducto(idproducto=${p.idproducto},tipo='principal')}"
 										alt="Imagen Principal" width="120px" height="120px"
 										onerror="this.src='/Imagenes/Productos/no-imagen.png'">
 								</td>
 
 								<td>
-									<img th:src="@{/ImagenProducto(idproducto=${p.idproducto},tipo='dos')}"
+									<img th:src="@{/productos/ImagenProducto(idproducto=${p.idproducto},tipo='dos')}"
 										alt="Imagen Secundaria 1" width="120px" height="120px"
 										onerror="this.src='/Imagenes/Productos/no-imagen.png'">
 								</td>
 
 								<td>
-									<img th:src="@{/ImagenProducto(idproducto=${p.idproducto},tipo='tres')}"
+									<img th:src="@{/productos/ImagenProducto(idproducto=${p.idproducto},tipo='tres')}"
 										alt="Imagen Secundaria 2" width="120px" height="120px"
 										onerror="this.src='/Imagenes/Productos/no-imagen.png'">
 								</td>

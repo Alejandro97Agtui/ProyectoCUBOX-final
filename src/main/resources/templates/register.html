@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Register - SB Admin</title>
+        <title>Register User-Web</title>
         <link href="dasboard/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -69,14 +69,15 @@
                                                     </div>
                                                 </div>
 												<div class="col-md-4">
-												    <div class="mb-3 mb-md-0">
+												    <div class="form-floating mb-3 mb-md-0">
 														<select th:field="*{rol}" id="inputRol" class="form-control">
-															<option value="-1">Seleccione Rol...</option>
+<!--															<option value="-1">...</option>-->
 <!--															<option value="1">admin</option>-->
 <!--															<option value="2">web</option>-->
 															<option value="admin">admin</option>
 															<option value="web">web</option>
 														</select>
+														<label for="inputRol">Rol seleccionado...</label>
 												    </div>
 												</div>
                                             </div>

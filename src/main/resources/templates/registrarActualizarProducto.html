@@ -128,10 +128,12 @@
             </div>
 
             <div style="margin: 15px 0px">
-                <a th:href="@{/ProductoCrud(accion='lst')}" type="button" class="btn btn-info">Ir Producto</a>
+                <a th:href="@{/productos/crud}" type="button" class="btn btn-info">Ir Producto</a>
             </div>
 
-            <div th:if="${mensaje}" th:text="${mensaje}"></div>
+            <br>
+			<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
+			<br>
 
         </form>
     </div>
