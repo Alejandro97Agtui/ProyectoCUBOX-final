@@ -1,146 +1,195 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Grabar Producto</title>
+	<meta charset="UTF-8">
+	<title>Grabar Producto</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap 5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Iconos FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<!-- Iconos FontAwesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- librería Sweetalert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- librería Sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Estilos personalizados -->
-    <style>
-        body { background: #f8f9fa; }
-        .card { border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: none; }
-        h1 { font-weight: bold; color: #0d6efd; }
-        label { font-weight: 500; }
-        .btn-primary { padding: 10px; font-size: 16px; font-weight: 500; }
-        @media ( max-width : 576px) { h1 { font-size: 1.5rem; text-align: center; } }
-    </style>
+	<!-- Estilos personalizados -->
+	<style>
+		body {
+			background: #f8f9fa;
+		}
+
+		.card {
+			border-radius: 15px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+			border: none;
+		}
+
+		h1 {
+			font-weight: bold;
+			color: #0d6efd;
+		}
+
+		label {
+			font-weight: 500;
+		}
+
+		.btn-primary {
+			padding: 10px;
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		@media (max-width : 576px) {
+			h1 {
+				font-size: 1.5rem;
+				text-align: center;
+			}
+		}
+	</style>
 </head>
+
 <body>
 
-<div class="container py-5">
-    <div class="card p-4">
-        <h1 class="mb-4">
-            <i class="fa-solid fa-user-plus"></i> Registrar/Actualizar Nuevo Producto
-        </h1>
+	<div class="container py-5">
+		<div class="card p-4">
+			<h1 class="mb-4">
+				<i class="fa-solid fa-user-plus"></i> Registrar/Actualizar Nuevo Producto
+			</h1>
 
-        <form th:action="@{/productos/grabar}" method="post" enctype="multipart/form-data" th:object="${producto}">
-			
-            <div class="row mb-3">
-                <div class="col-md-12" style="padding-bottom: 12px;">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input th:field="*{idproducto}" class="form-control" type="text" name="idproducto" placeholder="Código producto" required />
-                        <label>Idproducto</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-						<select id="inputCat" class="form-control" th:field="*{idcategoria}">
-							<option value="-1"></option>
-							<option th:each="c : ${lstCategorias}" 
-								th:text="${c.nombre}"  
-								th:value="${c.idcategoria}">Seleccione...</option>
-						</select>
-                        <label for="inputCat">Idcategoria seleccionado...</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating">
-						<select id="inputMar" class="form-control" th:field="*{idmarca}">
-							<option value="-1"></option>
-							<option th:each="m : ${lstMarcas}" 
-								th:text="${m.nombre}"  
-								th:value="${m.idmarca}">Seleccione...</option>
-						</select>
-                        <label for="inputMar">idmarca seleccionado...</label>
-                    </div>
-                </div>
-            </div>
+			<form th:action="@{/productos/grabar}" method="post" enctype="multipart/form-data" th:object="${producto}">
 
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input th:field="*{nombre}" class="form-control" type="text" name="nombre" placeholder="Celular" required />
-                        <label>Nombre</label>
-                    </div>
-                </div>
+				<div class="row mb-3">
+					<div class="col-md-12" style="padding-bottom: 12px;">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{idproducto}" class="form-control" type="text" name="idproducto"
+								placeholder="Código producto" required />
+							<label>Idproducto</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<select id="inputCat" class="form-control" th:field="*{idcategoria}">
+								<option value="-1"></option>
+								<option th:each="c : ${lstCategorias}" th:text="${c.nombre}"
+									th:value="${c.idcategoria}">Seleccione...</option>
+							</select>
+							<label for="inputCat">Idcategoria seleccionado...</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<select id="inputMar" class="form-control" th:field="*{idmarca}">
+								<option value="-1"></option>
+								<option th:each="m : ${lstMarcas}" th:text="${m.nombre}" th:value="${m.idmarca}">
+									Seleccione...</option>
+							</select>
+							<label for="inputMar">idmarca seleccionado...</label>
+						</div>
+					</div>
+				</div>
 
-                <div class="col-md-6">
-                    <div th:field="*{stock}" class="form-floating mb-3 mb-md-0">
-                        <input class="form-control" type="number" min="0" name="stock" placeholder="Celular" required />
-                        <label>Stock</label>
-                    </div>
-                </div>
-            </div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{nombre}" class="form-control" type="text" name="nombre"
+								placeholder="Celular" required />
+							<label>Nombre</label>
+						</div>
+					</div>
 
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input th:field="*{precio}" class="form-control" type="number" min="0" name="precio" placeholder="Celular" required />
-                        <label>Precio</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
-                        <input th:field="*{precio_oferta}" class="form-control" type="number" min="0" name="precio_oferta" placeholder="DNI" required />
-                        <label>Precio Oferta</label>
-                    </div>
-                </div>
-            </div>
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{stock}" class="form-control" type="number" min="0" name="stock"
+								placeholder="Celular" required />
+							<label>Stock</label>
+						</div>
+					</div>
+				</div>
 
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="form-floating">
-                        <textarea th:field="*{descripcion}" class="form-control" name="descripcion" id="descripcion" style="height: 150px;"></textarea>
-                        <label for="descripcion">Descripción</label>
-                    </div>
-                </div>
-            </div>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{precio}" class="form-control" type="number" min="0" name="precio" step="0.01"
+								placeholder="Celular" required />
+							<label>Precio</label>
+						</div>
+						<!-- step="0.01" :  permite 2 decimales --> 
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating mb-3 mb-md-0">
+							<input th:field="*{precio_oferta}" class="form-control" type="number" min="0" step="0.01"
+								name="precio_oferta" placeholder="DNI" required />
+							<label>Precio Oferta</label>
+						</div>
+					</div>
+				</div>
 
-            <div class="mb-3">
-                <label for="inputImagen1" class="mb-1">Fotografía (jpg, jpeg, png)</label>
-                <input class="form-control" type="file" name="imagen1" id="inputImagen1" accept=".jpg,.jpeg,.png" required />
-            </div>
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<textarea th:field="*{descripcion}" class="form-control" name="descripcion" id="descripcion"
+								style="height: 150px;"></textarea>
+							<label for="descripcion">Descripción</label>
+						</div>
+					</div>
+				</div>
 
-            <div class="mb-3">
-                <label for="inputImagen2" class="mb-1">Fotografía (jpg, jpeg, png)</label>
-                <input class="form-control" type="file" name="imagen2" id="inputImagen2" accept=".jpg,.jpeg,.png" required />
-            </div>
+				<!--            <div class="mb-3">-->
+				<!--                <label for="inputImagen1" class="mb-1">Fotografía (jpg, jpeg, png)</label>-->
+				<!--                <input class="form-control" type="file" name="imagen1" id="inputImagen1" accept=".jpg,.jpeg,.png" required />-->
+				<!--            </div>-->
 
-            <div class="mb-3">
-                <label for="inputImagen3" class="mb-1">Fotografía (jpg, jpeg, png)</label>
-                <input class="form-control" type="file" name="imagen3" id="inputImagen3" accept=".jpg,.jpeg,.png" required />
-            </div>
+				<!--            <div class="mb-3">-->
+				<!--                <label for="inputImagen2" class="mb-1">Fotografía (jpg, jpeg, png)</label>-->
+				<!--                <input class="form-control" type="file" name="imagen2" id="inputImagen2" accept=".jpg,.jpeg,.png" required />-->
+				<!--            </div>-->
 
-            <div class="mt-4 mb-0">
-                <div class="d-grid">
-                    <button class="btn btn-primary" type="submit" name="accion" value="reg">
-                        <i class="fa-solid fa-save"></i> Guardar
-                    </button>
-                </div>
-            </div>
+				<!--            <div class="mb-3">-->
+				<!--                <label for="inputImagen3" class="mb-1">Fotografía (jpg, jpeg, png)</label>-->
+				<!--                <input class="form-control" type="file" name="imagen3" id="inputImagen3" accept=".jpg,.jpeg,.png" required />-->
+				<!--            </div>-->
 
-            <div style="margin: 15px 0px">
-                <a th:href="@{/productos/crud}" type="button" class="btn btn-info">Ir Producto</a>
-            </div>
+				<div class="mb-3">
+					<label for="inputImagen1" class="mb-1">Fotografía (jpg, jpeg, png)</label>
+					<input class="form-control" type="file" name="imagen1" id="inputImagen1" accept=".jpg,.jpeg,.png"/>
+				</div>
 
-            <br>
-			<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
-			<br>
+				<div class="mb-3">
+					<label for="inputImagen2" class="mb-1">Fotografía (jpg, jpeg, png)</label>
+					<input class="form-control" type="file" name="imagen2" id="inputImagen2" accept=".jpg,.jpeg,.png"/>
+				</div>
 
-        </form>
-    </div>
-</div>
+				<div class="mb-3">
+					<label for="inputImagen3" class="mb-1">Fotografía (jpg, jpeg, png)</label>
+					<input class="form-control" type="file" name="imagen3" id="inputImagen3" accept=".jpg,.jpeg,.png" />
+				</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+				<div class="mt-4 mb-0">
+					<div class="d-grid">
+						<button class="btn btn-primary" type="submit" name="accion" value="reg">
+							<i class="fa-solid fa-save"></i> Guardar
+						</button>
+					</div>
+				</div>
+
+				<div style="margin: 15px 0px">
+					<a th:href="@{/productos/crud}" type="button" class="btn btn-info">Ir Producto</a>
+				</div>
+
+				<br>
+				<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
+				<br>
+
+			</form>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
