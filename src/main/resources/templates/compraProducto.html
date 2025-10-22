@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Comprar Producto</title>
+
+	<!-- CSS estático (colócalos en src/main/resources/static/assets/...) -->
+	<link rel="stylesheet" th:href="@{/assets/css/styles.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/slaider.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/vendido.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/categorias.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/resenas.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/footer.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/producto.css}">
+
+	<!-- librería Sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- FontAwesome para íconos -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
+
+</head>
+<!-- Definimos la variable local `u` desde la sesión con th:with -->
+
+<body th:with="u=${session.user}">
+
+	<header class="navbar">
+		<div class="nav-container">
+			<!-- Logo -->
+			<a th:href="@{/principal}" class="logo">
+				<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/d9ae27f0-f2b8-458f-b527-38489a24308e___b42588992c82b8e11076b72bf89bf427.svg"
+					alt="Coolbox">
+			</a>
+
+			<!-- Botón Categorías -->
+			<button class="btn-categorias">
+				<a th:href="@{/panel}" style="text-decoration: none;"><span class="menu-icon">&#9776;</span> Panel</a>
+			</button>
+
+			<!-- Buscador -->
+			<div class="search-box">
+				<input type="text" placeholder="¿Qué estás buscando?">
+				<button class="search-btn">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</div>
+
+			<!-- Enlaces de usuario -->
+			<div class="user-links">
+				<a href="#"><span><i class="fa-solid fa-bag-shopping"></i></span> Mis compras</a>
+
+				<!-- Icons -->
+				<div class="d-flex align-items-center" style="padding-right: 10px;">
+
+					<a th:href="@{/canasta}" class="btn btn-link text-secondary me-3 position-relative">
+						<i class="fa-solid fa-cart-shopping fs-5"></i>
+						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
+							th:text="${cantArticulos}">0</span>
+					</a>
+
+					<!-- Menú usuario -->
+					<div class="dropdown" style="background-color: coral; border-radius: 25px;">
+						<a href="#" class="d-flex align-items-center" id="dropdownUser" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="Usuario" class="rounded-circle"
+								width="36" height="36" style="object-fit: cover;"
+								onerror="this.src='/Imagenes/Perfil/default-user.png'">
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser"
+							style="width: 250px;">
+							<li class="text-center p-3">
+								<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="foto"
+									class="rounded-circle mb-2" width="60" height="60"
+									style="object-fit: cover; width: 75px;"
+									onerror="this.src='/Imagenes/Perfil/default-user.png'">
+								<div class="fw-semibold" th:text="${u.nombre}">Nombre usuario</div>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#"><i
+										class="fa-regular fa-user me-2"></i> Actualizar datos</a></li>
+							<li><a class="dropdown-item" href="#"><i
+										class="fa-regular fa-circle-question me-2"></i> Ayuda</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item text-danger" th:href="@{/logout}"><i
+										class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar sesión</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Botón hamburguesa en móvil -->
+			<div class="mobile-menu-btn" id="mobileMenuBtn">&#9776;</div>
+		</div>
+
+		<!-- Menú móvil -->
+		<div class="mobile-menu" id="mobileMenu">
+			<a th:href="@{/login}">Iniciar sesión</a>
+			<a th:href="@{/mis-compras}">Mis compras</a>
+			<a th:href="@{/categorias}">Categorías</a>
+		</div>
+	</header>
+
+	<section style="padding: 40px 0;">
+		<div class="w100">
+			<!-- Usamos th:action y th:method para enviar al controlador /carrito/agregar -->
+			<form th:action="@{/carrito/agregar}" method="post">
+				<!-- Contenedor principal de Bootstrap -->
+				<div class="container">
+					<!-- Fila de Bootstrap -->
+					<div class="row">
+						<!-- Columna izquierda para imágenes -->
+						<!--<div class="col-md-6 contenedorImgAple">
+							<div th:if="${productoSeleccionado != null}">
+								<div class="contenedorImgPequenas">
+									<img class="miniatura"
+										th:src="@{'/Imagenes/Productos/' + ${productoSeleccionado.idproducto} + 'c.jpg'}"
+										alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+									<img class="miniatura"
+										th:src="@{'/Imagenes/Productos/' + ${productoSeleccionado.idproducto} + 'b.jpg'}"
+										alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+									<img class="miniatura"
+										th:src="@{'/Imagenes/Productos/' + ${productoSeleccionado.idproducto} + 'd.jpg'}"
+										alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+								</div>
+								<img class="contenedorImgGrande"
+									th:src="@{'/Imagenes/Productos/' + ${productoSeleccionado.idproducto} + '.jpg'}"
+									alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+							</div>
+						</div>-->
+						
+						<div class="col-md-6 contenedorImgAple">
+						    <div th:if="${productoSeleccionado != null}">
+						        <div class="contenedorImgsWrapper">
+						            <div class="contenedorImgPequenas">
+						                <img class="miniatura" th:src="@{/productos/ImagenProducto(idproducto=${productoSeleccionado.idproducto},tipo='dos')}" 
+											alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+						                <img class="miniatura" th:src="@{/productos/ImagenProducto(idproducto=${productoSeleccionado.idproducto},tipo='tres')}" 
+											alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+						                <img class="miniatura" th:src="@{'/Imagenes/Productos/' + ${productoSeleccionado.idproducto} + 
+											'd.jpg'}" alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+						            </div>
+						            <div class="contenedorImgGrandeWrapper">
+						                <img class="contenedorImgGrande img-fluid" th:src="@{/productos/ImagenProducto(idproducto=${productoSeleccionado.idproducto},tipo='principal')}" alt="" onerror="this.src='/Imagenes/Productos/no-imagen.png'">
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+
+						<!-- Columna derecha para información -->
+						<div class="col-md-6 contenedorInfoAple">
+							<div th:if="${productoSeleccionado != null}">
+								<h4 th:text="${productoSeleccionado.nombre}">Nombre producto</h4>
+								<h2 class="info" th:text="${productoSeleccionado.descripcion}">Descripción</h2>
+								<div class="flexPrecios precioFlex">
+									<p class="precioActual">S/. <span th:text="${productoSeleccionado.precio}">0.00</span>
+									</p>
+									<p class="precioDescuento"
+										th:if="${productoSeleccionado.precio_oferta != null and productoSeleccionado.precio_oferta != 0.0}">
+										S/. <span th:text="${productoSeleccionado.precio_oferta}">0.00</span></p>
+								</div>
+							</div>
+
+							<div class="flexMetodoPagos">
+								<img src="https://coolboxpe.vtexassets.com/arquivos/bank-bbva.svg" alt="">
+								<img src="https://coolboxpe.vtexassets.com/arquivos/bank-bcp.svg" alt="">
+								<img src="https://coolboxpe.vtexassets.com/arquivos/bank-diners.svg" alt="">
+								<img src="https://coolboxpe.vtexassets.com/arquivos/bank-interbank.svg" alt="">
+							</div>
+
+							<!-- Contador de cantidades -->
+							<div class="contador">
+								<button type="button" class="btn" id="decrementar">-</button>
+								<div th:if="${productoSeleccionado != null}">
+									<input style="width: 90px;" type="number" name="cantidad" id="contador"
+										class="contador-numero sin-flechas" min="1"
+										th:attr="max=${productoSeleccionado.stock}" required="required" th:value="1">
+									<!-- Puedes enviar también el id del producto si tu controlador lo necesita -->
+									<input type="hidden" name="idproducto" th:value="${productoSeleccionado.idproducto}">
+								</div>
+								<button type="button" class="btn" id="incrementar">+</button>
+							</div>
+
+							<!-- Botón para agregar al carrito -->
+							<button type="submit" id="agregar-carrito" class="agregarCarro">Agregar al carrito</button>
+						</div>
+					</div>
+					<!-- Cierre de .row -->
+				</div>
+				<!-- Cierre de .container -->
+			</form>
+		</div>
+	</section>
+
+
+	<!--foooter-->
+	<footer>
+		<div class="w100">
+			<div class="containerFooter">
+				<div class="footerContenedor">
+					<!-- Logo -->
+					<div class="logo">
+						<img src="https://coolboxpe.vtexassets.com/assets/vtex/assets-builder/coolboxpe.store-theme/0.1.41/logo--inverse___3a15b0640cc80cad575a9c46e847f1f4.svg"
+							alt="Coolbox">
+					</div>
+
+					<h3 class="titleContacto">Contáctanos</h3>
+					<div class="flexContactos">
+						<a href="#"><i class="fa-brands fa-whatsapp"></i> Atención por wasap</a>
+						<a href="#"><i class="fa-solid fa-phone"></i> Atención por wasap+01 895 3256</a>
+						<a href="#"><i class="fa-solid fa-calendar"></i> Lun - Sab 9:00 am 6:00 pm</a>
+						<a href="#"><i class="fa-solid fa-envelope"></i> Servicioalcliente@peru.com</a>
+						<a href="#"><i class="fa-solid fa-envelope"></i> gerenciasac@rasperu.com</a>
+					</div>
+				</div>
+
+				<div class="footerContenedor">
+					<h3>Contáctanos</h3>
+					<div class="contenedorFooter">
+						<p>¿Quienes Somos?</p>
+						<p>Canales de atencion</p>
+						<p>Compra facil y seguro</p>
+						<p>Metodo de pago</p>
+					</div>
+				</div>
+
+				<div class="footerContenedor">
+					<h3>Servicio al cliente</h3>
+					<div class="contenedorFooter">
+						<p>Factura electronica</p>
+						<p>Ventas corporativas</p>
+						<p>Vende con nosotros</p>
+						<p>Disponibilidad de productos</p>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="redesPgos">
+				<div class="FlexRedes">
+					<div class="redes"><a href="#"><i class="fa-brands fa-facebook"></i></a></div>
+					<div class="redes"><a href="#"><i class="fa-brands fa-instagram"></i></a></div>
+					<div class="redes"><a href="#"><i class="fa-brands fa-youtube"></i></a></div>
+					<div class="redes"><a href="#"><i class="fa-brands fa-tiktok"></i></a></div>
+				</div>
+				<div class="metodoPagos">
+					<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/4b46f22a-154b-45d6-a8dd-f317f2e2c76d___a41358efe1241a261629050c89ff0931.png"
+						alt="">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--foooter-->
+
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</body>
+
+</html>

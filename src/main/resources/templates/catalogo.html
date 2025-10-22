@@ -148,7 +148,7 @@
 							</div>
 							<div class="card-footer text-end">
 								<a class="btn btn-outline-primary" th:if="${p.stock > 0}"
-									th:href="@{/carrito/seleccionar(id=${p.idproducto})}"
+									th:href="@{/carrito/seleccionar/{id}(id=${p.idproducto})}"
 									onclick="return confirm('¿Procesar?')">Añadir</a>
 
 								<button type="button" class="btn btn-primary" disabled

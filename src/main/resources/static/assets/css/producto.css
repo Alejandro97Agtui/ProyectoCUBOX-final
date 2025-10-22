@@ -11,13 +11,16 @@
 
 .contenedorImgAple{
     display: flex;
+	flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 20px;
    
 }
 
-.contenedorImgPequenas{
+
+
+/*.contenedorImgPequenas{
     display: flex;
     flex-direction: column;
     gap:20px; 
@@ -32,12 +35,82 @@
     border-radius: 10px;
     object-fit: cover;
     overflow: hidden;
+	
+
+.contenedorImgGrande {
+  width: 100%;
+  height: 100%;
+}
+	
+}*/
+
+/* Wrapper que contiene ambas columnas de imágenes */
+.contenedorImgsWrapper {
+  display: flex;
+  flex-direction: row;       /* dos elementos lado a lado */
+  gap: 20px;                 /* separación entre columnas */
+  align-items: flex-start;   /* alineación superior si diferentes alturas */
+  width: 100%;
+  height: 380px;
+
 }
 
-.contenedorImgGrande{
-    width: 400px;
-    height: 400px;
+/* Miniaturas (columna izquierda) */
+.contenedorImgPequenas {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 0 0 auto;           /* que no crezca y que tenga tamaño automático */
+  
+  width: 120px;              /* ancho fijo para la columna de miniaturas */
+
 }
+
+/* Miniaturas – imágenes */
+.contenedorImgPequenas img {
+  width: 100%;               /* que ocupen todo el ancho de la columna de miniaturas */
+  height: 112px;              /* mantener proporción */
+  border: 1px solid black;
+  border-radius: 10px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.contenedorImgGrandeWrapper {
+  display: flex;
+  justify-content: center;  /* centra horizontalmente */
+  align-items: center;      /* centra verticalmente */
+  width: auto;
+  flex: 1 1 auto;
+  /* opcional: define una altura mínima para que el centrado vertical tenga efecto */
+  max-height: 390px;        /* ajusta este valor según lo necesites */
+  overflow: hidden;
+}
+
+.contenedorImgGrande {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  display: block;
+  object-fit: contain;
+/*  max-height: 100%;*/
+}
+
+
+/*display: flex; convierte el contenedor en un “flex‑box”.
+
+justify-content: center; centra el contenido (la imagen) horizontalmente dentro del wrapper.
+
+align-items: center; centra el contenido verticalmente dentro del wrapper. 
+
+La clave es que el wrapper tenga algo de altura (o que su contenedor padre le dé altura) para que “centrar verticalmente” tenga efecto; si la altura se ajusta justo al contenido, el centrado vertical puede no notarse.
+
+Mantienes los estilos de la imagen (width:100%; height:auto; max-width:400px) para que no se salga.*/
+
+
+
+
+
 
 
 .contenedorInfoAple{
