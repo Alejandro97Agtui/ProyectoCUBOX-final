@@ -36,7 +36,7 @@
 
 			<!-- Botón Categorías -->
 			<button class="btn-categorias">
-				<a th:href="@{/panel}"><span class="menu-icon">&#9776;</span> Panel</a>
+				<a th:href="@{/panel}" style="text-decoration: none;"><span class="menu-icon">&#9776;</span> Panel</a>
 			</button>
 
 			<!-- Buscador -->
@@ -48,10 +48,48 @@
 			</div>
 
 			<!-- Enlaces de usuario -->
-			<div class="user-links">
-				<a th:href="@{/login}"><span><i class="fa-solid fa-user"></i></span> Iniciar sesión</a>
-				<a href="#"><span><i class="fa-solid fa-bag-shopping"></i></span> Mis compras</a>
-				<a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></a>
+			<!-- Icons -->
+			<div class="d-flex align-items-center" style="padding-right: 10px;">
+
+				<a href="#" class="btn btn-link text-secondary me-3 position-relative">
+					<i class="fa-solid fa-cart-shopping fs-5"></i>
+					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
+												th:text="${cantArticulos}">0</span>
+				</a>
+
+				<!-- Menú usuario -->
+				<div class="dropdown" style="background-color: grey; border-radius: 25px;">
+					<a href="#" class="d-flex align-items-center" id="dropdownUser" data-bs-toggle="dropdown"
+						aria-expanded="false">
+						<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="Usuario"
+							class="rounded-circle" width="36" height="36" style="object-fit: cover;"
+							onerror="this.src='/Imagenes/Perfil/default-user.png'">
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser"
+						style="width: 250px;">
+						<li class="text-center p-3">
+							<img th:src="@{/Imagenes/Perfil/{id}.jpg(id=${u.idusuario})}" alt="foto"
+								class="rounded-circle mb-2" width="60" height="60"
+								style="object-fit: cover; width: 75px;"
+								onerror="this.src='/Imagenes/Perfil/default-user.png'">
+							<div class="fw-semibold" th:text="${u.nombre}">Nombre</div>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li><a class="dropdown-item" href=""><i class="fa-regular fa-user me-2"></i> Actualizar
+								datos</a>
+						</li>
+						<li><a class="dropdown-item" href=""><i class="fa-regular fa-circle-question me-2"></i>
+								Ayuda</a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li><a class="dropdown-item text-danger" th:href="@{logout}"><i
+									class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar sesión</a></li>
+					</ul>
+				</div>
 			</div>
 
 			<!-- Botón hamburguesa en móvil -->
@@ -126,7 +164,7 @@
 		<section class="w100">
 			<div class="separacion-vendido">
 				<h2 class="titulo-vendido">Lo más vendido</h2>
-				<div class="contenedorVendido" th:if="${not #lists.isEmpty(lstPDestacados)}">
+				<div class="contenedorVendido" th:if="${not #lists.isEmpty(lstPDestacados)}" style="text-decoration: none;">
 
 					<a th:each="p : ${lstPDestacados}" class="vendido">
 
@@ -465,6 +503,8 @@
 
 	<script th:src="@{/assets/js/nav.js}"></script>
 	<script th:src="@{/assets/js/resena.js}"></script>
+	<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}"
+		crossorigin="anonymous"></script>
 
 </body>
 

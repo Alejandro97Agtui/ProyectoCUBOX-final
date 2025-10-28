@@ -70,14 +70,16 @@
                                                 </div>
 												<div class="col-md-4">
 												    <div class="form-floating mb-3 mb-md-0">
-														<select th:field="*{rol}" id="inputRol" class="form-control">
+														<input th:field="*{rol}" name="rol" class="form-control" id="inputRol" type="text" readonly/>
+                                                        <label for="inputRol">Rol</label>
 <!--															<option value="-1">...</option>-->
 <!--															<option value="1">admin</option>-->
 <!--															<option value="2">web</option>-->
+<!--													<select th:field="*{rol}" id="inputRol" class="form-control">
 															<option value="admin">admin</option>
 															<option value="web">web</option>
-														</select>
-														<label for="inputRol">Rol seleccionado...</label>
+														</select> 
+														<label for="inputRol">Rol seleccionado...</label> -->
 												    </div>
 												</div>
                                             </div>

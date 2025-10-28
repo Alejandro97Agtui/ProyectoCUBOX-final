@@ -37,8 +37,14 @@ public class LoginSignInController {
 	
 	@GetMapping("/register")
 	private String cargarRegistrarUsuario(Model model) {
-		model.addAttribute("usuario", new Usuario());
+		
+		Usuario nuevoUsuario = new Usuario();
+		nuevoUsuario.setRol("web");
+		
+		model.addAttribute("usuario", nuevoUsuario);
+		
 		return "register";
+		
 	}
 	
 //	@PostMapping("/login")
@@ -92,7 +98,9 @@ public class LoginSignInController {
 				model.addAttribute("mensaje", "Usuario registrado exitosamente.");
 				model.addAttribute("cssmensaje", "alert alert-success");
 				
-				model.addAttribute("usuario", new Usuario());
+				Usuario nuevoUsuario = new Usuario();
+				nuevoUsuario.setRol("web");
+				model.addAttribute("usuario", nuevoUsuario);
 				
 			} else {
 				
@@ -205,6 +213,9 @@ public class LoginSignInController {
 		
 		// Pasar usuario al principal.html
 		model.addAttribute("u", u);
+		
+		Integer cant = (Integer) session.getAttribute("cantArticulos");
+		model.addAttribute("cantArticulos", cant);
 		
 		// "Log de session id" también al cargar principal...
 	    System.out.println("Accediendo a Principal - ID de sesión: " + session.getId());

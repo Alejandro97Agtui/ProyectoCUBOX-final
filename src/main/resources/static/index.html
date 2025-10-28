@@ -1,18 +1,445 @@
 <!DOCTYPE html>
-
-<html>
-	
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	
-	
+	<meta charset="UTF-8">
+	<title>CUBOX</title>
+
+	<!-- Rutas corregidas para Spring -->
+	<link rel="stylesheet" href="/assets/css/styles.css">
+	<link rel="stylesheet" href="/assets/css/slaider.css">
+	<link rel="stylesheet" href="/assets/css/vendido.css">
+	<link rel="stylesheet" href="/assets/css/categorias.css">
+	<link rel="stylesheet" href="/assets/css/resenas.css">
+	<link rel="stylesheet" href="/assets/css/footer.css">
+
+	<!-- CDN externos (sin cambios) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+		integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
 </head>
 
 <body>
-	
-	<marquee>Hola, Bienvenidos a CUBOX!!!</marquee>
-	
-</body>
+	<header class="navbar">
+		<div class="nav-container">
+			<!-- Logo -->
+			<a href="#" class="logo">
+				<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/d9ae27f0-f2b8-458f-b527-38489a24308e___b42588992c82b8e11076b72bf89bf427.svg"
+					alt="Coolbox">
+			</a>
 
+			<!-- Botón Categorías -->
+			<button class="btn-categorias">
+				<a href="#"><span class="menu-icon">&#9776;</span> Categorías</a>
+			</button>
+
+			<!-- Buscador -->
+			<div class="search-box">
+				<input type="text" placeholder="¿Qué estás buscando?">
+				<button class="search-btn">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</div>
+
+			<!-- Enlaces de usuario -->
+			<div class="user-links">
+				<a href="/login"><span><i class="fa-solid fa-user"></i></span> Iniciar sesión</a>
+				<a href="#"><span><i class="fa-solid fa-bag-shopping"></i></span> Mis compras</a>
+				<a href="#" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></a>
+			</div>
+
+			<!-- Botón hamburguesa en móvil -->
+			<div class="mobile-menu-btn" id="mobileMenuBtn">&#9776;</div>
+		</div>
+
+		<!-- Menú móvil -->
+		<div class="mobile-menu" id="mobileMenu">
+			<a href="/login">Iniciar sesión</a>
+			<a href="#">Mis compras</a>
+			<a href="#">Categorías</a>
+		</div>
+	</header>
+
+
+	<!--SLAIDER PEQUEÑO PARA PUBLICIDAD-->
+	<div class="slider">
+		<!-- Imagen 1 -->
+		<picture class="slide active">
+			<source media="(max-width: 768px)"
+				srcset="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/e8555cf5-63f6-4bab-95a3-b1b28b136372___36b64c5b359402f026cb6f25602b6318.png">
+			<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/0341ade1-4a24-4e83-a056-3f4729efe381___81d4e42e2abe80a51f0011f536fe49f8.png"
+				alt="Imagen 1">
+		</picture>
+
+		<!-- Imagen 2 -->
+		<picture class="slide">
+			<source media="(max-width: 768px)"
+				srcset="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/ef02bee3-f1d6-43f1-bdf8-1a657abf3e31___134ee031fc834181379867d2fca674d2.png">
+			<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/9f2e32ed-3d4b-444d-a451-5abc3f9bedb3___00ad8f99acfcc456ccd51926ad85858f.png"
+				alt="Imagen 2">
+		</picture>
+	</div>
+
+	<!--FIN DE SLAIDER PEQUEÑO PARA PUBLICIDAD-->
+
+
+	<!--SALIDER IMAGENES GRANDES-->
+	<div class="wrap-carrusel">
+		<div class="contenedor-carrusel">
+			<div class="item-carrusel">
+				<picture>
+					<source media="(max-width: 768px)"
+						srcset="https://hiraoka.com.pe/media/wysiwyg/M7_-_GEN_RICO_13.png">
+					<img src="https://hiraoka.com.pe/media/wysiwyg/H7_-_GEN_RICO_15.png" alt="Imagen 1">
+				</picture>
+			</div>
+			<div class="item-carrusel">
+				<picture>
+					<source media="(max-width: 768px)" srcset="https://hiraoka.com.pe/media/wysiwyg/M1_-_BTS_16.png">
+					<img src="https://hiraoka.com.pe/media/wysiwyg/H1_-_BTS_16.png" alt="Imagen 2">
+				</picture>
+			</div>
+			<div class="item-carrusel">
+				<picture>
+					<source media="(max-width: 768px)"
+						srcset="https://hiraoka.com.pe/media/wysiwyg/M17_-_GEN_RICO_3.png">
+					<img src="https://hiraoka.com.pe/media/wysiwyg/H17_-_GEN_RICO_3.png" alt="Imagen 3">
+				</picture>
+			</div>
+		</div>
+
+		<!-- Indicadores -->
+		<div class="puntos-carrusel">
+			<span class="punto activo"></span> <span class="punto"></span> <span class="punto"></span>
+		</div>
+	</div>
+	<!--FIN SLAIDER IMAGENES GRANDES-->
+
+	<!-- LO MAS VENDIDO - CONVERSIÓN DE JSTL A THYMELEAF -->
+	<section class="bg-vendido">
+		<section class="w100">
+			<div class="separacion-vendido">
+				<h2 class="titulo-vendido">Lo más vendido</h2>
+				
+
+				<!-- Mensaje si no hay productos -->
+				<div style="text-align: center;">
+					<p>No hay productos disponibles</p>
+				</div>
+
+			</div>
+			</div>
+		</section>
+	</section>
+
+	<!--FIN DE LO MAS VENDIDO-->
+
+	<!--Categorias-->
+	<section class="bg-categorias" id="categorias">
+		<div class="w100">
+			<h2 class="categoriaTitle">CATEGORIAS FAVORITAS</h2>
+			<div class="contenedorCategorias">
+				<div class="categorias">
+					<div class="flexTituloCat">
+						<p class="titulocel">Celulares</p>
+						<a href="">Ver todo</a>
+					</div>
+					<div class="contenedorImgCategoria">
+						<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/1d13f1b3-eeba-47c8-89cd-512101bd437d___1574a34e07a7fcbb8aaee67419e037f6.png"
+							alt="">
+					</div>
+					<div class="contenedorImgCatpequenos">
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/83e72734-59b3-494c-9f6a-00dccdf1bc4f___4a757ba2bede5b0ebd1332bc7ba804bf.png"
+								alt="">
+							<h5>Apple</h5>
+						</div>
+
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/d85ee6ca-8e1f-4046-8d61-99e0caca4bb2___25f16db5dcadde13de7d031b1cce72b0.png"
+								alt="">
+							<h5>Samsung</h5>
+						</div>
+
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/cb4aba93-aed2-4588-a484-b2327c056df5___678458afafb09e47851ed9b8f8a8ef2c.png"
+								alt="">
+							<h5>Xiomi</h5>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="categorias">
+					<div class="flexTituloCat">
+						<p class="titulocel">Cómputo</p>
+						<a href="">Ver todo</a>
+					</div>
+					<div class="contenedorImgCategoria">
+						<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/543ed27f-996d-4507-b9f4-a04f14605189___b3f8747533ea40e7a8aff5e77bd45cec.png"
+							alt="">
+					</div>
+					<div class="contenedorImgCatpequenos">
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/061a3564-617d-47e5-aaa4-6d2d7b2c52d7___468652331638c97c78c7f19123288157.png"
+								alt="">
+							<h5>Impresora</h5>
+						</div>
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/2fea5b8a-876f-4771-bfa2-f63ae1d9a8e6___ddefd34b2236d8a3f04deab89c10d2b9.png"
+								alt="">
+							<h5>Accesorios</h5>
+						</div>
+
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/ae8701ef-98bf-4a0e-8eca-641be1189d21___bf31f037eeafe4f35045f0a653cfafb1.png"
+								alt="">
+							<h5>Software</h5>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="categorias">
+					<div class="flexTituloCat">
+						<p class="titulocel">Audífonos</p>
+						<a href="">Ver todo</a>
+					</div>
+					<div class="contenedorImgCategoria">
+						<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/9ace45cc-f6e2-43f1-bb22-c852c27b92b6___5c42da665960c94d79817b9a21213cc3.png"
+							alt="">
+					</div>
+					<div class="contenedorImgCatpequenos">
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/ec2e1e78-2a75-4d15-b981-428bfeb3a319___b2e546df00e5e601ad2a36473268b0ef.png"
+								alt="">
+							<h5>On Ear</h5>
+						</div>
+
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/77f817b2-e0ac-4591-821d-f7309bfcb1d4___43c79ecc79532f4c6f3544501ecc2eb8.png"
+								alt="">
+							<h5>Aud. WL</h5>
+						</div>
+
+
+
+						<div class="contenedorImgcel">
+							<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/dd0b2465-a061-4a64-9f5a-4e3751135209___b49e258a4cbbefaaafe85bc9ccccac73.png"
+								alt="">
+							<h5>Aud. AL</h5>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--Fin categorias-->
+
+	<!--RESEÑAS CLIENTES-->
+	<section class="bg-resenas">
+		<div class="w100">
+			<div class="flextituloFlecha">
+				<h2>RESEÑAS CLIENTES</h2>
+				<div class="flexArrows">
+					<div class="arrowIcon flex1" id="arrowLeft">
+						<i class="fa-solid fa-arrow-left"></i>
+					</div>
+					<div class="arrowIcon flex2" id="arrowRigth">
+						<i class="fa-solid fa-arrow-right"></i>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="flexResenas">
+				<div class="resenas">
+					<p class="nomCliente">
+						Jhon Duran <i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Polo Reyna <i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Andres Leo <i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Marina Guerrrero<i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Leonel Messsi <i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Cristiano Ronaldo<i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Claudia Pilares<i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+
+				<div class="resenas">
+					<p class="nomCliente">
+						Michell Sanchez<i class="fa-solid fa-circle-check"></i>
+					</p>
+					<p class="descripcion">"¡Muy satisfecho con mi compra en
+						CUBOX! La laptop llegó rápido, en perfecto estado y a un gran
+						precio. Excelente servicio, ¡recomendado!"</p>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<!--FIN RESEÑAS CLIENTES-->
+
+
+
+
+	<!--foooter-->
+	<footer>
+		<div class="w100">
+			<div class="containerFooter">
+				<div class="footerContenedor">
+					<!-- Logo -->
+					<div class="logo">
+						<img src="https://coolboxpe.vtexassets.com/assets/vtex/assets-builder/coolboxpe.store-theme/0.1.41/logo--inverse___3a15b0640cc80cad575a9c46e847f1f4.svg"
+							alt="Coolbox">
+					</div>
+
+					<h3 class="titleContacto">Contáctanos</h3>
+					<div class="flexContactos">
+						<a href=""><i class="fa-brands fa-whatsapp"></i> Atención por
+							wasap</a> <a href=""><i class="fa-solid fa-phone"></i> Atención
+							por wasap+01 895 3256</a> <a href=""><i class="fa-solid fa-calendar"></i> Lun - Sab 9:00 am
+							6:00 pm</a> <a href=""><i class="fa-solid fa-envelope"></i>
+							Servicioalcliente@peru.com</a> <a href=""> <i class="fa-solid fa-envelope"></i>
+							gerenciasac@rasperu.com
+						</a>
+					</div>
+				</div>
+
+				<div class="footerContenedor">
+
+
+					<h3>Contáctanos</h3>
+
+					<div class="contenedorFooter">
+						<p>¿Quienes Somos?</p>
+						<p>Canales de atencion</p>
+						<p>Compra facil y seguro</p>
+						<p>Metodo de pago</p>
+					</div>
+				</div>
+
+
+				<div class="footerContenedor">
+
+
+					<h3>Servicio al cliente</h3>
+
+					<div class="contenedorFooter">
+						<p>Factura electronica</p>
+						<p>Ventas corporativas</p>
+						<p>Vende con nosotros</p>
+						<p>Disponibilidad de productos</p>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="redesPgos">
+				<div class="FlexRedes">
+					<div class="redes">
+						<a href=""><i class="fa-brands fa-facebook"></i></a>
+					</div>
+					<div class="redes">
+						<a href=""><i class="fa-brands fa-instagram"></i></a>
+					</div>
+					<div class="redes">
+						<a href=""><i class="fa-brands fa-youtube"></i></a>
+					</div>
+					<div class="redes">
+						<a href=""><i class="fa-brands fa-tiktok"></i></a>
+					</div>
+				</div>
+				<div class="metodoPagos">
+					<img src="https://coolboxpe.vtexassets.com/assets/vtex.file-manager-graphql/images/4b46f22a-154b-45d6-a8dd-f317f2e2c76d___a41358efe1241a261629050c89ff0931.png"
+						alt="">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--foooter-->
+
+
+
+	<script src="/assets/js/nav.js"></script>
+	<script src="/assets/js/resena.js"></script>
+
+</body>
 
 </html>
