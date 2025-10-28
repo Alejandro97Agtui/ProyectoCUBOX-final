@@ -118,7 +118,7 @@ public class ProductoController {
 	    
 	    response.setContentType("application/pdf");
 	    try {
-	        String ru = resourceLoader.getResource("classpath:/static/grafico2.jasper").getURI().getPath();
+	        String ru = resourceLoader.getResource("classpath:/static/grafico1.jasper").getURI().getPath();
 	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
 	        OutputStream outStream = response.getOutputStream();
 	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
@@ -137,7 +137,25 @@ public class ProductoController {
 	    
 	    response.setContentType("application/pdf");
 	    try {
-	        String ru = resourceLoader.getResource("classpath:/static/Grafico3.jasper").getURI().getPath();
+	        String ru = resourceLoader.getResource("classpath:/static/grafico2.jasper").getURI().getPath();
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
+	        OutputStream outStream = response.getOutputStream();
+	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@GetMapping("/graficosC")
+	public void obtenerGraficoC(HttpServletResponse response) {
+	    // opción 1
+	    //response.setHeader("Content-Disposition", "attachment; filename=\"reporte.pdf\";");
+	    // opción 2
+	    response.setHeader("Content-Disposition", "inline;");
+	    
+	    response.setContentType("application/pdf");
+	    try {
+	        String ru = resourceLoader.getResource("classpath:/static/grafico3.jasper").getURI().getPath();
 	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
 	        OutputStream outStream = response.getOutputStream();
 	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
