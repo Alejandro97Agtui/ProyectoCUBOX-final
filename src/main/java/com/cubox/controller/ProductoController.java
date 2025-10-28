@@ -3,13 +3,17 @@ package com.cubox.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +32,9 @@ import com.cubox.repository.IProductoRepository;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 
 @Controller
@@ -46,6 +53,13 @@ public class ProductoController {
 	
 	@Autowired
     private ServletContext servletContext; // necesario para obtener mime type
+	
+	@Autowired
+	private DataSource dataSource; // javax.sql
+
+	@Autowired
+	private ResourceLoader resourceLoader; // core.io
+
 	
 	
 	@GetMapping("/crud")
@@ -76,6 +90,61 @@ public class ProductoController {
 	}
 	
 	
+	@GetMapping("/reportes")
+	public void reportes(HttpServletResponse response) {
+	    // opción 1
+	    //response.setHeader("Content-Disposition", "attachment; filename=\"reporte.pdf\";");
+	    // opción 2
+	    response.setHeader("Content-Disposition", "inline;");
+	    
+	    response.setContentType("application/pdf");
+	    try {
+	        String ru = resourceLoader.getResource("classpath:/static/Reporte01.jasper").getURI().getPath();
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
+	        OutputStream outStream = response.getOutputStream();
+	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
+	@GetMapping("/graficosA")
+	public void obtenerGraficoA(HttpServletResponse response) {
+	    // opción 1
+	    //response.setHeader("Content-Disposition", "attachment; filename=\"reporte.pdf\";");
+	    // opción 2
+	    response.setHeader("Content-Disposition", "inline;");
+	    
+	    response.setContentType("application/pdf");
+	    try {
+	        String ru = resourceLoader.getResource("classpath:/static/grafico2.jasper").getURI().getPath();
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
+	        OutputStream outStream = response.getOutputStream();
+	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
+	@GetMapping("/graficosB")
+	public void obtenerGraficoB(HttpServletResponse response) {
+	    // opción 1
+	    //response.setHeader("Content-Disposition", "attachment; filename=\"reporte.pdf\";");
+	    // opción 2
+	    response.setHeader("Content-Disposition", "inline;");
+	    
+	    response.setContentType("application/pdf");
+	    try {
+	        String ru = resourceLoader.getResource("classpath:/static/Grafico3.jasper").getURI().getPath();
+	        JasperPrint jasperPrint = JasperFillManager.fillReport(ru, null, dataSource.getConnection());
+	        OutputStream outStream = response.getOutputStream();
+	        JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	
 //----------------------------------------------------------------------------------------------------------------------------------------
