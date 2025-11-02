@@ -57,7 +57,7 @@
 
 			<!-- Enlaces de usuario -->
 			<div class="user-links">
-				<a href="#"><span><i class="fa-solid fa-bag-shopping"></i></span>
+				<a th:href="@{/pedidos/mostrar}"><span><i class="fa-solid fa-bag-shopping"></i></span>
 					Mis compras</a>
 
 				<!-- Icons -->
@@ -112,7 +112,7 @@
 		<!-- Menú móvil -->
 		<div class="mobile-menu" id="mobileMenu">
 			<a th:href="@{/login}">Iniciar sesión</a>
-			<a href="#}">Mis compras</a>
+			<a th:href="@{/pedidos/mostrar}">Mis compras</a>
 			<a href="#">Categorías</a>
 		</div>
 	</header>

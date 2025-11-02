@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>PRODUCTOS CUBOX</title>
+
+	<!-- librería Sweetalert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- FontAwesome para íconos -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+	<!-- DataTables Buttons CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+</head>
+
+<body>
+
+	<div id="layoutSidenav_content">
+		<main>
+			<div class="container-fluid px-4 mt-4">
+				<h2 class="my-4">Mis Compras</h2>
+
+				<div style="display: inline;">
+					<!-- Botón para regresar a panel-->
+					<a th:href="@{/panel}" class="btn btn-secondary mb-4">
+						<i class="fa-solid fa-rotate-left"></i> Regresar
+					</a>
+				</div>
+
+				<!-- Tabla de cabeceras -->
+				<div class="table-responsive">
+					<table id="datatablesSimple" class="table table-striped table-hover table-bordered align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>Fecha Pedido</th>
+								<th>Nro Pedido</th>
+								<th>Cliente</th>
+								<th>Total</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="pedido : ${lstPedidosRealizados}">
+								<td th:text="${pedido.fchPed}">YYYY/MM/dd</td>
+								<td th:text="${pedido.numPed}">T-20XX-XXXXXXXXXX-XXXX</td>
+								<td th:text="${pedido.getUsuario().getNombre() + ' ' + pedido.getUsuario().getApellidos()}">XXX</td>
+								<td th:text="${'S/ '} + ${#numbers.formatDecimal(pedido.total, 1, 'COMMA', 2, 'POINT')}">XXX</td>
+								
+								<td class="text-center">
+								  <form style="display:inline;" th:object="${pedido}">
+								    <!-- Botón Consultar -> hace GET a /pedidos/mostrar/{id} -->
+								    <button type="submit"
+								            th:formaction="@{/pedidos/consultar/} + ${pedido.id}"
+								            formmethod="get"
+								            class="btn btn-sm btn-outline-warning me-1"
+								            title="Consultar">
+								      <i class="fas fa-pencil-alt"> Ver</i>
+								    </button>
+								  </form>
+								</td>
+								
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- DataTables JS -->
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+	<!-- DataTables Buttons JS -->
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+	<!-- Inicialización de DataTables con botones -->
+	<script>
+		$(document).ready(function () {
+			$('#datatablesSimple').DataTable({
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+				},
+				dom: 'Bfrtip', // activa la barra de botones
+				buttons: ['copy', 'excel', 'pdf', 'print']
+			});
+		});
+	</script>
+
+</body>
+
+</html>
