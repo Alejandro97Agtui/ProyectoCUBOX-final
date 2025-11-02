@@ -73,17 +73,22 @@
 										th:text="${#numbers.formatDecimal(d.precio, 2, 'COMMA', 2, 'POINT')}">S/. 0.00
 									</td>
 									<td class="align-middle"
-										th:text="${#numbers.formatDecimal(d.precio.multiply(T(java.math.BigDecimal).valueOf(d.cantidad)), 2, 'COMMA', 2, 'POINT')}">
-										S/. 0.00</td>
+									    th:text="${#numbers.formatDecimal(d.precio.multiply(T(java.math.BigDecimal).valueOf(d.cantidad.longValue())), 2, 'COMMA', 2, 'POINT')}">
+									    S/. 0.00
+									</td>
 									<td class="align-middle">
-										<a th:href="@{'/carrito/eliminar/' + ${stat.index}}"
-											class="btn btn-outline-warning">Eliminar <i class="fas fa-trash"></i></a>
+										<!--<a th:href="@{'/carrito/eliminar/' + ${d.producto.idproducto}}"
+										   class="btn btn-outline-warning">Eliminar <i class="fas fa-trash"></i></a>-->
+									   <form th:action="@{/carrito/eliminar}" method="post" style="display:inline;">
+									     <input type="hidden" name="idproducto" th:value="${d.producto.idproducto}" />
+									     <button type="submit" class="btn btn-outline-warning">Eliminar <i class="fas fa-trash"></i></button>
+									   </form>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 
-						<a th:href="@{/catalogo}" class="btn btn-primary">
+						<a th:href="@{/catalogo/abrir}" class="btn btn-primary">
 							Continuar comprando <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 						</a>
 					</div>
@@ -108,9 +113,7 @@
 			</div>
 
 			<!-- mensaje suelto -->
-			<div th:if="${mensaje != null}" class="mt-3">
-				<p th:text="${mensaje}"></p>
-			</div>
+			<div role="alert" th:class="${cssmensaje}" th:text="${mensaje}"></div>
 
 		</main>
 	</div>

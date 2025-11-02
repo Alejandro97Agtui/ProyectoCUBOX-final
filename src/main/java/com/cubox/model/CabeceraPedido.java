@@ -1,5 +1,6 @@
 package com.cubox.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ public class CabeceraPedido {
     @ManyToOne
     @JoinColumn(name = "codigo_cliente")
     private Usuario usuario;
+    
+    private BigDecimal total;
 
     @OneToMany(mappedBy = "cabecera", cascade = CascadeType.ALL)
     private List<DetallePedido> detalles = new ArrayList<>();

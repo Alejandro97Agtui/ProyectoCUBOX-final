@@ -62,10 +62,17 @@
 				<!-- Icons -->
 				<div class="d-flex align-items-center" style="padding-right: 10px;">
 
-					<a th:href="@{/canasta}" class="btn btn-link text-secondary me-3 position-relative">
+					<!--<a th:href="@{/canasta}" class="btn btn-link text-secondary me-3 position-relative">
 						<i class="fa-solid fa-cart-shopping fs-5"></i>
 						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
 							th:text="${cantArticulos}">0</span>
+					</a>-->
+					
+					<a class="btn btn-link text-secondary me-3 position-relative"
+					   th:href="@{/carrito/mostrar}">
+					  <i class="fa-solid fa-cart-shopping fs-5"></i>
+					  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
+					        th:text="${cantArticulos}">0</span>
 					</a>
 
 					<!-- Menú usuario -->
