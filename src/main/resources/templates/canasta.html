@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Canasta de Compras</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+</head>
+
+<body>
+	<div class="container py-4">
+		<main>
+			<!-- Si carrito vacío -->
+			<div th:if="${cantArticulos == 0}">
+				<div class="text-center">
+					<h1>Carro de compra</h1>
+					<img alt="" th:src="@{/Imagenes/Productos/vacio.png}" style="max-width:260px">
+					<p>Su carrito de compras está vacío, pulse <a th:href="@{/catalogo/abrir}">aquí</a> para comenzar a
+						comprar...</p>
+				</div>
+			</div>
+
+			<!-- Si hay productos -->
+			<div th:if="${cantArticulos > 0}">
+				<div class="row">
+					<div class="col-8">
+						<h1 class="py-3">Carrito de compra</h1>
+
+						<table id="tablaCarrito" class="table table-striped table-hover table-bordered align-middle">
+							<thead>
+								<tr>
+									<th>Imagen Producto</th>
+									<th>Producto</th>
+									<th>Cantidad</th>
+									<th>Precio</th>
+									<th>Sub total</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="d, stat : ${carro}">
+									<td class="text-center align-middle">
+										<img th:src="${d.producto.imagen_principal != null} ? @{/imagenes/productos/${d.producto.imagen_principal}} : @{/assets/img/no-imagen.png}"
+											style="width:75px; height:58px; object-fit:contain;" />
+									</td>
+									<td class="align-middle" th:text="${d.producto.nombre}">Nombre Producto</td>
+									<td class="align-middle">
+										<!-- form para disminuir -->
+										<form th:action="@{/carrito/menos}" method="post" style="display:inline;">
+											<input type="hidden" name="index" th:value="${stat.index}" />
+											<button type="submit" class="btn btn-outline-secondary btn-sm">-</button>
+										</form>
+
+										<span class="mx-2" th:text="${d.cantidad}">1</span>
+
+										<!-- form para aumentar -->
+										<form th:action="@{/carrito/mas}" method="post" style="display:inline;">
+											<input type="hidden" name="index" th:value="${stat.index}" />
+											<button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+										</form>
+									</td>
+									<td class="align-middle"
+										th:text="${#numbers.formatDecimal(d.precio, 2, 'COMMA', 2, 'POINT')}">S/. 0.00
+									</td>
+									<td class="align-middle"
+										th:text="${#numbers.formatDecimal(d.precio.multiply(T(java.math.BigDecimal).valueOf(d.cantidad)), 2, 'COMMA', 2, 'POINT')}">
+										S/. 0.00</td>
+									<td class="align-middle">
+										<a th:href="@{'/carrito/eliminar/' + ${stat.index}}"
+											class="btn btn-outline-warning">Eliminar <i class="fas fa-trash"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<a th:href="@{/catalogo}" class="btn btn-primary">
+							Continuar comprando <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						</a>
+					</div>
+
+					<div class="col-4">
+						<h1 class="pt-3">Resumen de pedido</h1>
+						<hr>
+						<div class="mb-3 row">
+							<label class="col">Total de artículos:</label>
+							<label class="col">(<span th:text="${cantArticulos}">0</span>)</label>
+						</div>
+						<div class="mb-3 row">
+							<label class="col">Total importe:</label>
+							<label class="col">S/. <span
+									th:text="${#numbers.formatDecimal(subTotalVenta, 2, 'COMMA', 2, 'POINT')}">0.00</span></label>
+						</div>
+						<form th:action="@{/carrito/confirmar}" method="post">
+							<button class="btn btn-success">Procesar compra <i class="fas fa-credit-card"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- mensaje suelto -->
+			<div th:if="${mensaje != null}" class="mt-3">
+				<p th:text="${mensaje}"></p>
+			</div>
+
+		</main>
+	</div>
+
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- DataTables -->
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#tablaCarrito').DataTable({
+				language: {url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'},
+				dom: 'Bfrtip',
+				buttons: ['copy', 'excel', 'pdf', 'print']
+			});
+		});
+	</script>
+</body>
+
+</html>

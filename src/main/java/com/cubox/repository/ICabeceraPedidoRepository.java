@@ -7,6 +7,6 @@ import com.cubox.model.CabeceraPedido;
 
 @Repository
 
-public interface ICabeceraPedidoRepository extends JpaRepository<CabeceraPedido, String>{
+public interface ICabeceraPedidoRepository extends JpaRepository<CabeceraPedido, Long>{
 
 }

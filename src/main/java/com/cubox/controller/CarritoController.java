@@ -72,7 +72,7 @@ public class CarritoController {
 	
 	
 	@PostMapping("/agregar")
-	private String agregarProductoSeleccionadoACanaste(@RequestParam("cantidad") int cantidad, Model model, HttpSession session) {
+	private String agregarProductoSeleccionadoACanasta(@RequestParam("cantidad") int cantidad, Model model, HttpSession session) {
 		
 		Producto productoSeleccionado = (Producto) session.getAttribute("productoSeleccionado");
 		
@@ -80,6 +80,9 @@ public class CarritoController {
 		System.out.println("Producto Seleccionado: " + productoSeleccionado);
 		System.out.println("Cantidad del producto Seleccionado a comprar: " + cantidad);
 		
+		Integer cantArt = (Integer) session.getAttribute("cantArticulos");
+		
+		model.addAttribute("cantArticulos", cantArt);
 		
 		return "canasta";
 	}
